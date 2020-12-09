@@ -13,7 +13,7 @@ jobs:
       uses: actions/checkout@v2
     - name: Install dependencies
       run: |
-        sudo apt-get install -y --no-install-recommends libncurses-dev libssl-dev bc flex bison make gcc git gcc-arm-linux-gnueabihf xz-utils wget squashfs-tools curl patch ca-certificates
+        sudo apt-get install -y --no-install-recommends gcc-arm-linux-gnueabihf
         curl https://raw.githubusercontent.com/puppylinux-woof-CE/initrd_progs/master/pkg/w_apps_static/w_apps/vercmp.c | gcc -x c -o vercmp -
         sudo install -m 755 vercmp /usr/local/bin/vercmp
     - name: Build kernel
