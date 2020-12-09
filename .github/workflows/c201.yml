@@ -26,7 +26,7 @@ jobs:
         key: local-repositories
     - name: Download packages
       run: |
-        (echo 1; echo 1; echo; echo) | sudo ./merge2out
+        (echo 1; echo 1; echo; echo) | sudo -E ./merge2out
         cd ../woof-out_x86_64_arm_debian_bullseye
         sudo ./0setup
         sudo ./1download
