@@ -18,6 +18,9 @@ jobs:
         sudo install -m 755 vercmp /usr/local/bin/vercmp
         sudo install -D -m 644 woof-code/rootfs-skeleton/usr/local/petget/categories.dat /usr/local/petget/categories.dat
         mkdir -p ../local-repositories
+        echo -e '#!/bin/sh\nexec ccache arm-linux-gnueabihf-gcc "$@"' | sudo tee /usr/local/bin/arm-linux-gnueabihf-ccache
+        sudo chmod 755 /usr/local/bin/arm-linux-gnueabihf-ccache
+        ccache --set-config=hash_dir=false --set-config=max_size=5.0G
     - name: Cache local-repositories
       id: cache-local-repositories
       uses: actions/cache@v2
@@ -30,6 +33,11 @@ jobs:
         cd ../woof-out_x86_64_arm_debian_bullseye
         sudo ./0setup
         sudo ./1download
+    - name: Cache ccache
+      uses: actions/cache@v2
+      with:
+        path: ~/.ccache
+        key: ccache
     - name: Build kernel
       run: |
         cd kernel-kit
