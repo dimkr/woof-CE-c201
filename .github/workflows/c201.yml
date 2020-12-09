@@ -13,18 +13,30 @@ jobs:
       uses: actions/checkout@v2
     - name: Install dependencies
       run: |
-        sudo apt-get install -y --no-install-recommends gcc-arm-linux-gnueabihf
+        sudo apt-get install -y --no-install-recommends gcc-arm-linux-gnueabihf vboot-kernel-utils u-boot-tools device-tree-compiler
         curl https://raw.githubusercontent.com/puppylinux-woof-CE/initrd_progs/master/pkg/w_apps_static/w_apps/vercmp.c | gcc -x c -o vercmp -
         sudo install -m 755 vercmp /usr/local/bin/vercmp
-        mkdir -p local-repositories
+        install -D -m 644 woof-code/rootfs-skeleton/usr/local/petget/categories.dat /usr/local/petget/categories.dat
+        mkdir -p ../local-repositories
     - name: Cache local-repositories
-      id: local-repositories
+      id: cache-local-repositories
       uses: actions/cache@v2
       with:
-        path: local-repositories
+        path: ../local-repositories
         key: local-repositories
+    - name: Download packages
+      run: |
+        (echo 1; echo 1; echo; echo) | ./merge2out
+        cd ../woof-out_x86_64_arm_debian_bullseye
+        ./0setup
+        ./1download
     - name: Build kernel
       run: |
         cd kernel-kit
         cp -f c201-build.conf build.conf
         ./build.sh
+    - name: Build image
+      run: |
+        cd ../woof-out_x86_64_arm_debian_bullseye
+        echo | ./2createpackages
+        ./3builddistro
