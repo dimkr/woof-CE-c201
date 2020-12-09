@@ -16,6 +16,13 @@ jobs:
         sudo apt-get install -y --no-install-recommends gcc-arm-linux-gnueabihf
         curl https://raw.githubusercontent.com/puppylinux-woof-CE/initrd_progs/master/pkg/w_apps_static/w_apps/vercmp.c | gcc -x c -o vercmp -
         sudo install -m 755 vercmp /usr/local/bin/vercmp
+        mkdir -p local-repositories
+    - name: Cache local-repositories
+      id: local-repositories
+      uses: actions/cache@v2
+      with:
+        path: local-repositories
+        key: local-repositories
     - name: Build kernel
       run: |
         cd kernel-kit
