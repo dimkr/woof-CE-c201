@@ -21,6 +21,8 @@ jobs:
         echo -e '#!/bin/sh\nexec ccache arm-linux-gnueabihf-gcc "$@"' | sudo tee /usr/local/bin/arm-linux-gnueabihf-ccache
         sudo chmod 755 /usr/local/bin/arm-linux-gnueabihf-ccache
         ccache --set-config=hash_dir=false --set-config=max_size=5.0G
+        echo "dash dash/sh boolean false" | sudo debconf-set-selections
+        sudo DEBIAN_FRONTEND=noninteractive dpkg-reconfigure dash
     - name: Cache local-repositories
       id: cache-local-repositories
       uses: actions/cache@v2
