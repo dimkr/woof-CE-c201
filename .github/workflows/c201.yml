@@ -34,7 +34,7 @@ jobs:
         sudo ./1download
     - name: Build kernel
       run: |
-        cd kernel-kit
+        cd ../woof-out_x86_64_arm_debian_bullseye/kernel-kit
         sudo cp -f c201-build.conf build.conf
         sudo ./build.sh
     - name: Build image
