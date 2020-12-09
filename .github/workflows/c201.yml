@@ -33,8 +33,8 @@ jobs:
     - name: Build kernel
       run: |
         cd kernel-kit
-        cp -f c201-build.conf build.conf
-        ./build.sh
+        sudo cp -f c201-build.conf build.conf
+        sudo ./build.sh
     - name: Build image
       run: |
         cd ../woof-out_x86_64_arm_debian_bullseye
