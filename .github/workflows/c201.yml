@@ -26,10 +26,10 @@ jobs:
         key: local-repositories
     - name: Download packages
       run: |
-        (echo 1; echo 1; echo; echo) | ./merge2out
+        (echo 1; echo 1; echo; echo) | sudo ./merge2out
         cd ../woof-out_x86_64_arm_debian_bullseye
-        ./0setup
-        ./1download
+        sudo ./0setup
+        sudo ./1download
     - name: Build kernel
       run: |
         cd kernel-kit
@@ -38,5 +38,5 @@ jobs:
     - name: Build image
       run: |
         cd ../woof-out_x86_64_arm_debian_bullseye
-        echo | ./2createpackages
-        ./3builddistro
+        echo | sudo ./2createpackages
+        sudo ./3builddistro
